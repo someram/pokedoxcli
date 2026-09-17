@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	"github.com/strontem/pokedoxcli/internal/pokeapi"
+	"github.com/someram/pokedoxcli/internal/pokeapi"
 )
 
 func main() {

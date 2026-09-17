@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/strontem/pokedoxcli/internal/pokecache"
+	"github.com/someram/pokedoxcli/internal/pokecache"
 )
 
 type Client struct {

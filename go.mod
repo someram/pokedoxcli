@@ -1,3 +1,3 @@
-module github.com/strontem/pokedoxcli
+module github.com/someram/pokedoxcli
 
 go 1.27.1
