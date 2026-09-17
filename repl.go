@@ -1,0 +1,120 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+
+	"github.com/strontem/pokedoxcli/internal/pokeapi"
+)
+
+type cliCommand struct {
+	name        string
+	description string
+	callback    func(*config, ...string) error
+}
+
+type config struct {
+	commands          map[string]cliCommand
+	pokeapiClient     pokeapi.Client
+	nextLocationsURl  *string
+	prevLocationsURl  *string
+	pokedox	       	  map[string]pokeapi.Pokemon
+
+}
+		
+func startRepl(c *config) {
+
+	scanner := bufio.NewScanner(os.Stdin)
+
+	for {
+		fmt.Print("Pokedox > ")
+		scanner.Scan()
+		userInput := scanner.Text()
+		words := cleanInput(userInput)
+
+		if len(words) == 0 {
+			continue
+		}
+
+		commandName := words[0]
+		args := []string{}
+		if len(words) > 1 {
+			args = words[1:]
+		}
+
+		
+		command, exists := c.commands[commandName]
+		if exists {
+			err := command.callback(c, args...)
+			if err != nil {
+				fmt.Println(err)
+			}
+			continue
+		} else {
+			fmt.Println("Unknown command")
+			continue
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Println("error reading standard input", err)
+	}
+}
+
+func cleanInput(text string) []string {
+	output := strings.ToLower(text)
+	words := strings.Fields(output)
+	return words
+}
+
+
+func getCommands() map[string]cliCommand {
+	return map[string]cliCommand{
+		"help": {
+			name:        "help",
+			description: "Displays a help message",
+			callback:    commandHelp,
+		},
+		"exit": {
+			name:        "exit",
+			description: "Exit the Pokedex",
+			callback:    commandExit,
+		},
+		"map": {
+			name: "map",
+			description: "Get the next page of locations",
+			callback: commandMapf,
+		},
+		"mapb": {
+			name: "mapb",
+			description: "Get the previous page of locations",
+			callback: commandMapb,
+		},
+		"explore": {
+			name: "explore <location_name>",
+			description: "Explore a location",
+			callback: commandExplore,
+		},
+		"catch": {
+			name: "catch <pokemon>",
+			description: "Catch a pokemon",
+			callback: commandCatch,
+		},
+		"inspect": {
+			name: "inspect <pokemon>",
+			description: "Inpect the stats of a pokemon",
+			callback: commandInspect,
+		},
+		"pokedox": {
+			name: "pokedox",
+			description: "Pokemons that you have caught",
+			callback: commandPokedox,
+		},
+	}
+}
+
+
+
+
