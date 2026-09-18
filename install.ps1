@@ -4,14 +4,10 @@ $Repo = "someram/pokedoxcli"
 $Version = "v1.0.0"
 $Binary = "pokedoxcli"
 
-$Arch = if ([Environment]::Is64BitOperatingSystem) {
-    if ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") {
-        "arm64"
-    } else {
-        "amd64"
-    }
+$Arch = if ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") {
+    "arm64"
 } else {
-    Write-Error "32-bit Windows is not supported."
+    "amd64"
 }
 
 $File = "${Binary}-windows-${Arch}.exe"
@@ -28,14 +24,21 @@ Invoke-WebRequest -Uri $Url -OutFile $InstallPath
 
 $UserPath = [Environment]::GetEnvironmentVariable("Path", "User")
 
-if ($UserPath -notlike "*$InstallDir*") {
-    [Environment]::SetEnvironmentVariable(
-        "Path",
-        "$UserPath;$InstallDir",
-        "User"
-    )
+if (($UserPath -split ';') -notcontains $InstallDir) {
+    $NewPath = if ([string]::IsNullOrEmpty($UserPath)) {
+        $InstallDir
+    } else {
+        "$UserPath;$InstallDir"
+    }
+
+    [Environment]::SetEnvironmentVariable("Path", $NewPath, "User")
+}
+
+if (($env:Path -split ';') -notcontains $InstallDir) {
+    $env:Path += ";$InstallDir"
 }
 
 Write-Host ""
 Write-Host "PokeDox CLI installed successfully!"
-Write-Host "Restart your terminal, then run: pokedoxcli"
+Write-Host "Run: pokedoxcli"
+
