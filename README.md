@@ -35,3 +35,26 @@ Run the binary
 - ``inspect`` -> inspect the caught pokemon stats
 - ``pokedox``-> your own collections of pokemon that you have caught
 - ``exit``-> exit the pokedoxcli
+
+
+#### ALternate method to use Pokedoxcli
+
+### Install pokedox cli on your machine 
+
+On ``Windows``
+
+```powershell
+curl -fsSL https://raw.githubusercontent.com/someram/pokedoxcli/main/install.sh | sh
+```
+
+On Linux/MacOS
+
+```shell
+irm https://raw.githubusercontent.com/someram/pokedoxcli/main/install.ps1 | iex
+```
+
+
+After installing Run
+```shell
+pokedoxcli
+```
