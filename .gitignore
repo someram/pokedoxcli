@@ -1,3 +1,10 @@
 pokedoxcli
 repl_test.go
 repl.log
+
+pokedoxcli-darwin-amd64*
+pokedoxcli-darwin-arm64*
+pokedoxcli-linux-amd64*
+pokedoxcli-linux-arm64*
+pokedoxcli-windows-amd64.exe*
+pokedoxcli-windows-arm64.exe*
