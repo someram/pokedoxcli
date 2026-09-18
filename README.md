@@ -41,15 +41,15 @@ Run the binary
 
 ### Install pokedox cli on your machine 
 
-On ``Windows``
+On ```Linux/MacOS```
 
-```powershell
+```bash
 curl -fsSL https://raw.githubusercontent.com/someram/pokedoxcli/main/install.sh | sh
 ```
 
-On Linux/MacOS
+On ```Windows```
 
-```shell
+```powershell
 irm https://raw.githubusercontent.com/someram/pokedoxcli/main/install.ps1 | iex
 ```
 
